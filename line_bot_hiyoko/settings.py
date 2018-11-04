@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 LINE_BOT_HIYOKO_APPS = [
     'line_api',
     'dialogflow_api',
+    'answer_api',
 ]
 INSTALLED_APPS += LINE_BOT_HIYOKO_APPS
 

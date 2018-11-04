@@ -6,7 +6,7 @@ class Message(models.Model):
     line_id = models.CharField(max_length=100, blank=True, default='')
     question = models.TextField()
     actual_reply = models.TextField()
-    is_unknown_now = models.BooleanField(default=False)
+    is_unknown = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('created',)

@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from dialogflow_api.services import retrieve_answer
+from dialogflow_api.services import receive_line_message
 
 line_bot_api = LineBotApi(os.environ.get("LINE_CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("LINE_CHANNEL_SECRET"))
@@ -31,7 +31,7 @@ def main(request):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    reply = retrieve_answer(event)
+    reply = receive_line_message(event)
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=reply))
