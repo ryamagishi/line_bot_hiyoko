@@ -52,3 +52,31 @@ def _get_dialogflow_session():
     session = session_client.session_path(project_id, session_id)
 
     return session, session_client
+
+
+def update_answer(question: str, answer: str):
+    credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+    service_account_info = json.loads(credentials_raw)
+    credentials = service_account.Credentials.from_service_account_info(service_account_info)
+    client = dialogflow.IntentsClient(credentials=credentials)
+    project_id = service_account_info.get('project_id')
+    parent = client.project_agent_path(project_id)
+
+    training_phrases = []
+    part = dialogflow.types.Intent.TrainingPhrase.Part(
+        text=question)
+    # Here we create a new training phrase for each provided part.
+    training_phrase = dialogflow.types.Intent.TrainingPhrase(parts=[part])
+    training_phrases.append(training_phrase)
+
+    text = dialogflow.types.Intent.Message.Text(text=[answer])
+    message = dialogflow.types.Intent.Message(text=text)
+
+    intent = dialogflow.types.Intent(
+        display_name=question,
+        training_phrases=training_phrases,
+        messages=[message]
+    )
+
+    _ = client.create_intent(parent, intent)
+

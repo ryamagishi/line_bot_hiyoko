@@ -1,5 +1,7 @@
 from django.db import models
 
+import dialogflow_api
+
 
 class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)

@@ -5,7 +5,7 @@ from answer_api.serializers import MessageSerializer
 
 
 class MessageList(generics.ListAPIView):
-    queryset = Message.objects.all()
+    queryset = Message.objects.filter(is_unknown=True)
     serializer_class = MessageSerializer
 
 
